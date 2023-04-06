@@ -1,17 +1,20 @@
 const CategoryModel = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
-    id: DataTypes.INTEGER,
-    name: DataTypes.STRING,
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name:  {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
   },
   {
     timestamp: false,
     underscored: true
   });
-
-  CategoryModel.associate = (models) => {
-    CategoryModel.hasMany(models.PostCategory,
-      { foreignKey: 'category_id', as: 'PostCategory' })
-  }
 
   return Category;
 };
