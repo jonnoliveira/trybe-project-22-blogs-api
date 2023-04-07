@@ -23,7 +23,7 @@ const insert = async (displayName, email, password, image) => {
   return { type: null, message: findNewUser.dataValues.id };
 };
 
-const getAllUsers = async () => {
+const findAll = async () => {
   const allUsers = await User.findAll({
     attributes: { exclude: ['password'] },
   });
@@ -33,7 +33,19 @@ const getAllUsers = async () => {
   return { type: null, message: allUsers };
 };
 
+const findById = async (id) => {
+  const user = await User.findOne({
+    where: { id },
+    attributes: { exclude: ['password'] },
+  });
+
+  if (!user) return { type: 404, message: 'User does not exist' };
+
+  return { type: null, message: user };
+};
+
 module.exports = {
   insert,
-  getAllUsers,
+  findAll,
+  findById,
 };
