@@ -8,7 +8,7 @@ const findByLogin = async (email) => {
 
   if (!user) return { type: 400, message: 'Invalid fields' };
 
-  return { type: null, message: user };
+  return { type: null, message: user.id };
 };
 
 module.exports = {

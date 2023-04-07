@@ -1,7 +1,5 @@
-const jwt = require('jsonwebtoken');
 const { loginService } = require('../services');
-
-const secret = process.env.JWT_SECRET;
+const { generateToken } = require('../auth/validateJWT');
 
 const findByLogin = async (req, res) => {
   const { email } = req.body;
@@ -9,12 +7,7 @@ const findByLogin = async (req, res) => {
 
   if (type) return res.status(type).json({ message });
 
-  const jwtConfig = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
-  };
-  
-  const token = jwt.sign({ data: { userId: message.id } }, secret, jwtConfig);
+  const token = generateToken(message);
 
   return res.status(200).json({ token });
 };

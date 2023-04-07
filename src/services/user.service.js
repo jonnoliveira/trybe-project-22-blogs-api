@@ -17,12 +17,23 @@ const insert = async (displayName, email, password, image) => {
 
   const findNewUser = await User.findOne({
     where: { email },
-    attributes: { exclude: ['password', 'image', 'displayName'] },
+    attributes: { exclude: ['password', 'image'] },
   });
 
-  return { type: null, message: findNewUser };
+  return { type: null, message: findNewUser.dataValues.id };
+};
+
+const getAllUsers = async () => {
+  const allUsers = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
+
+  if (!allUsers) return { type: 400, message: 'Ocorreu algum erro no getAllUsers' };
+
+  return { type: null, message: allUsers };
 };
 
 module.exports = {
   insert,
+  getAllUsers,
 };
