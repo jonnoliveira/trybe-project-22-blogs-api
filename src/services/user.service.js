@@ -13,14 +13,9 @@ const insert = async (displayName, email, password, image) => {
 
   if (existingEmail) return { type: 409, message: 'User already registered' };
 
-  await User.create({ displayName, email, password, image });
+  const user = await User.create({ displayName, email, password, image });
 
-  const findNewUser = await User.findOne({
-    where: { email },
-    attributes: { exclude: ['password', 'image'] },
-  });
-
-  return { type: null, message: findNewUser.dataValues.id };
+  return { type: null, message: user.id };
 };
 
 const findAll = async () => {

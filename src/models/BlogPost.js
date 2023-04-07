@@ -21,11 +21,9 @@ const BlogPostModel = (sequelize, DataTypes) => {
       }
     },
     published: {
-      allowNull: false,
       type: DataTypes.DATE
     },
     updated: {
-      allowNull: false,
       type: DataTypes.DATE
     }
   },
@@ -33,7 +31,8 @@ const BlogPostModel = (sequelize, DataTypes) => {
     timestamps: true,
     createdAt: 'published',
     updatedAt: 'updated',
-    underscored: true
+    underscored: true,
+    tableName: 'blog_posts',
   });
 
   BlogPost.associate = (models) => {

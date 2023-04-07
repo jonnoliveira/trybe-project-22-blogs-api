@@ -7,13 +7,13 @@ const CategoryModel = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     name:  {
-      allowNull: false,
       type: DataTypes.STRING,
     },
   },
   {
-    timestamp: false,
-    underscored: true
+    timestamps: false,
+    underscored: true,
+    tableName: 'categories',
   });
 
   return Category;
