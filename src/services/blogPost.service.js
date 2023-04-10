@@ -92,10 +92,24 @@ const insert = async (authorization, title, content, categoryIds) => {
   return { type: null, message: newPost };
 };
 
+const remove = async (authorization, id) => {
+  const { payload } = validateToken(authorization);
+  
+  const post = await BlogPost.findOne({
+    where: { id },
+  });
+  
+  if (!post) return { type: 404, message: 'Post does not exist' };
+  if (post.userId !== payload) return { type: 401, message: 'Unauthorized user' };
+
+  return { type: null, message: null };
+};
+
 module.exports = {
   findAll,
   findById,
   update,
   findByQuery,
   insert,
+  remove,
 };

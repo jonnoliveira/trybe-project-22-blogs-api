@@ -52,10 +52,22 @@ const insert = async (req, res) => {
   return res.status(201).json(message);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+
+  const { type, message } = await blogPostService.remove(authorization, id);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(204).send();
+};
+
 module.exports = {
   findAll,
   findById,
   update,
   findByQuery,
   insert,
+  remove,
 };
