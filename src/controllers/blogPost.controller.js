@@ -30,8 +30,19 @@ const update = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const findByQuery = async (req, res) => {
+  const { q } = req.query;
+
+  const { type, message } = await blogPostService.findByQuery(q);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(200).json(message);
+};
+
 module.exports = {
   findAll,
   findById,
   update,
+  findByQuery,
 };
