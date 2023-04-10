@@ -52,7 +52,6 @@ const removeMe = async (authorization) => {
   await User.destroy({
     where: { id: payload },
   });
-  console.log(user);
 
   return { type: null, message: null };
 };

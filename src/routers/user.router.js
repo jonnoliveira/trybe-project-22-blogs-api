@@ -4,7 +4,7 @@ const { userController } = require('../controllers');
 const router = express.Router();
 const { authToken } = require('../middlewares/authorization');
 
-router.get('/:id ', authToken, userController.findById);
+router.get('/:id', authToken, userController.findById);
 
 router.delete('/me', authToken, userController.removeMe);
 
