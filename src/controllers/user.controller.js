@@ -31,8 +31,19 @@ const findById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const removeMe = async (req, res) => {
+  const { authorization } = req.headers;
+
+  const { type, message } = await userService.removeMe(authorization);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(204).send();
+};
+
 module.exports = {
   insert,
   findAll,
   findById,
+  removeMe,
 };

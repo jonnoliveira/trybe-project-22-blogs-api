@@ -28,7 +28,7 @@ const BlogPostModel = (sequelize, DataTypes) => {
     }
   },
   {
-    timestamps: true,
+    timestamps: false,
     createdAt: 'published',
     updatedAt: 'updated',
     underscored: true,

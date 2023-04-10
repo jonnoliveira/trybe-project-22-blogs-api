@@ -1,6 +1,7 @@
 const { User } = require('../models');
 
 const { validInsertion } = require('../middlewares/validInsertion');
+const { validateToken } = require('../auth/validateJWT');
 
 const insert = async (displayName, email, password, image) => {
   const isValid = validInsertion(displayName, email, password);
@@ -39,8 +40,26 @@ const findById = async (id) => {
   return { type: null, message: user };
 };
 
+const removeMe = async (authorization) => {
+  const { payload } = validateToken(authorization);
+
+  const user = await User.findOne({
+    where: { id: payload },
+  });
+
+  if (!user) return { type: 404, message: 'User not found' };
+
+  await User.destroy({
+    where: { id: payload },
+  });
+  console.log(user);
+
+  return { type: null, message: null };
+};
+
 module.exports = {
   insert,
   findAll,
   findById,
+  removeMe,
 };
