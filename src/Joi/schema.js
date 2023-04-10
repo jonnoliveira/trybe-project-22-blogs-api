@@ -26,7 +26,5 @@ const newUserSchema = Joi.object({
 });
 
 module.exports = {
-  displayNameSchema,
-  emailSchema,
   newUserSchema,
 };

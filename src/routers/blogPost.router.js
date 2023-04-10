@@ -6,6 +6,8 @@ const { authToken } = require('../middlewares/authorization');
 
 // router.post('/', blogPostController.insert);
 
+router.put('/:id', authToken, blogPostController.update);
+
 router.get('/:id', authToken, blogPostController.findById);
 
 router.get('/', authToken, blogPostController.findAll);

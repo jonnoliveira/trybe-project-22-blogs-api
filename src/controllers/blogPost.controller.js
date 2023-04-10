@@ -18,7 +18,20 @@ const findById = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const { authorization } = req.headers;
+
+  const { type, message } = await blogPostService.update(authorization, id, title, content);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(200).json(message);
+};
+
 module.exports = {
   findAll,
   findById,
+  update,
 };
