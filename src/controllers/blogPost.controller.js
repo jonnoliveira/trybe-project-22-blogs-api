@@ -40,9 +40,22 @@ const findByQuery = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const insert = async (req, res) => {
+  const { title, content, categoryIds } = req.body;
+  const { authorization } = req.headers;
+
+  const { type, message } = await blogPostService
+  .insert(authorization, title, content, categoryIds);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(201).json(message);
+};
+
 module.exports = {
   findAll,
   findById,
   update,
   findByQuery,
+  insert,
 };

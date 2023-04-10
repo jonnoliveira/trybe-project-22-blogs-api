@@ -1,9 +1,10 @@
 const { Op } = require('sequelize');
 
-const { BlogPost, Category, User } = require('../models');
+const { BlogPost, Category, User, PostCategory } = require('../models');
 
 const { validateToken } = require('../auth/validateJWT');
 const { validUpdatePost } = require('../middlewares/validUpdatePost');
+const { validInsertPost } = require('../middlewares/validInsertPost');
 
 const findAll = async () => {
   const posts = await BlogPost.findAll({
@@ -67,9 +68,34 @@ const findByQuery = async (q) => {
   return { type: null, message: posts };
 };
 
+const insert = async (authorization, title, content, categoryIds) => {
+  const { payload } = validateToken(authorization);
+  const isValid = validInsertPost(title, content, categoryIds);
+
+  if (isValid.type) return isValid;
+
+  const categories = await Category.findAndCountAll({
+    where: { id: categoryIds },
+  });
+
+  if (categories.count !== categoryIds.length) {
+    return { type: 400, message: 'one or more "categoryIds" not found' }; 
+  }
+
+  const newPost = await BlogPost.create({
+    title, content, userId: payload, published: new Date(), updated: new Date(),
+  });
+
+  categories.rows
+    .map((category) => PostCategory.create({ postId: newPost.id, categoryId: category.id }));
+
+  return { type: null, message: newPost };
+};
+
 module.exports = {
   findAll,
   findById,
   update,
   findByQuery,
+  insert,
 };

@@ -4,7 +4,7 @@ const { blogPostController } = require('../controllers');
 const router = express.Router();
 const { authToken } = require('../middlewares/authorization');
 
-// router.post('/', blogPostController.insert);
+router.post('/', authToken, blogPostController.insert);
 
 router.get('/search', authToken, blogPostController.findByQuery);
 
