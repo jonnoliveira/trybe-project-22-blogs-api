@@ -82,7 +82,7 @@ Por fim, com a utilização de todas as ferramentas citadas anteriormente, pude 
 
 ## 100% :heavy_check_mark:
 
-![Project-blogs-api-grade]()
+![Project-blogs-api-grade](https://github.com/jonnoliveira/trybe-project-22-blogs-api/blob/main/images/blogs-api-grade.png)
 
 </details> 
  
